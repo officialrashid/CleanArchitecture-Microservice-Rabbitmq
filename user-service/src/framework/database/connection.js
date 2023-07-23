@@ -4,10 +4,10 @@ mongoose.set("strictQuery", true);
 const connectDB = async (config) => {
   try {
     await mongoose.connect(config.mongo.uri);
-    console.log(`Database connected successfully`);
+   
   } catch (error) {
-    console.log(error);
-    process.exit(14);
+
+    process.exit(1);
   }
 };
 
