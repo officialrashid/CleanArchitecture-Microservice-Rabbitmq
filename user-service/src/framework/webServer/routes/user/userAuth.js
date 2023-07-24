@@ -8,8 +8,9 @@ import userServiceImp from '../../../../framework/services/user/userServiceImp.j
 const authRouter=(express)=>{
 
     const router = express.Router()
+    
     const controller = userController(userRepositoryInt,userRepositoryImp,userSeriviceInt,userServiceImp)
-
+     //call the register api
     router.route('/register').post(controller.createUser)
 
     return router
