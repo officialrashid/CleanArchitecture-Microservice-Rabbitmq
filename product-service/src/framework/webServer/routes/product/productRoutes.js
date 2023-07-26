@@ -12,7 +12,7 @@ const productRouter=(express)=>{
     const productsController = productController(productRepositoryInf,productServiceInt,productRepositoryImpl,productServiceImp)
      //call the register api
     router.route('/addProduct').post(productsController.addProduct)
-
+    router.route('/buyProduct').post(productsController.buyProduct)
     return router
 }
 
