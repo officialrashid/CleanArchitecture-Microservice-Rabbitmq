@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
-import amqp from "amqplib"
-var channel,connection;
+
 mongoose.set("strictQuery", true);
 
 const connectDB = async (config) => {
@@ -12,19 +11,7 @@ const connectDB = async (config) => {
     process.exit(14);
   }
 };
-const connect = async () => {
-  try {
-    const amqpServer = "amqp://localhost:5672";
-    connection = await amqp.connect(amqpServer);
-    channel = await connection.createChannel();
-    await channel.assertQueue("PRODUCT");
-    console.log("Connected to RabbitMQ");
-  } catch (error) {
-    console.error("Error connecting to RabbitMQ:", error);
-  }
-};
 
-connect();
 
 
 export default connectDB;

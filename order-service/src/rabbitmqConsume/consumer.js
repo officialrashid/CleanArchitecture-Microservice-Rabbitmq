@@ -1,5 +1,9 @@
 import amqp from "amqplib";
-import orderData from "../framework/database/mongodb/models/orderModels/orderModels.js"
+import createOrder from "../application/usecase/order/createOrder.js";
+import orderRepositoriInf from "../application/repositories/order/orderRepositoriInf.js";
+import orderRepositoryImp from "../framework/database/mongodb/repositories/order/orderRepositoryImp.js";
+
+const orderDbRepository = orderRepositoriInf(orderRepositoryImp())
 const connect = async () => {
     try {
       const amqpServer = "amqp://localhost:5672";
@@ -21,28 +25,18 @@ const connect = async () => {
     
         console.log("consuming order queue");
         console.log(products, "products consuming il ethitta");
-        console.log(userId, "consuming user nte email ethitta");
-        const newOrder = createOrder(products,userId);
+        console.log(userId, "consuming user nte email ethitta")
+       createOrder(products,userId,orderDbRepository).then((newOrder)=>{
+        console.log(newOrder,"update cheyth order queue ethittaaaa");
         channel.ack(data);
         channel.sendToQueue(
             "PRODUCT",
             Buffer.from(JSON.stringify({newOrder}))
             )
+       }).catch((error)=>{
+        console.log("error creating order",error);
+       })
+       
       });
     });
   },10000)
-  function createOrder(products,userId){
-
-    let total =0;
-    for(let i=0;i<products.length;i++){
-
-        total += products[i].price
-    }
-    const newOrder = new orderData({
-        products,
-        userId:userId,
-        totalPrice:total
-    })
-    newOrder.save()
-    return newOrder;
-  }

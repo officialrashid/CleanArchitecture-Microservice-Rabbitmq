@@ -1,4 +1,5 @@
 // serverConfig.js
+import "../../rabbitmqConsume/consumer.js"
 const serverConfig = (server, config) => {
     const startServer = () => {
       server.listen(config.port, () => {
