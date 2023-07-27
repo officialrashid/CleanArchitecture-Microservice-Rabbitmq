@@ -17,18 +17,18 @@ spec:
             service:
               name: user-service
               port:
-                number: 3001
+                number: 3000
         - path: /api/v1/product/?(.*)
           pathType: Prefix
           backend:
             service:
               name: product-service
               port:
-                number: 4001
+                number: 4000
         - path: /api/v1/order/?(.*)
           pathType: Prefix
           backend:
             service:
               name: order-service
               port:
-                number: 6001
+                number: 6000

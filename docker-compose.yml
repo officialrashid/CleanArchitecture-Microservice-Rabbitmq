@@ -1,43 +1,36 @@
 version: '3.9'
+
 services:
   rabbitmq:
-    image: rabbitmq:latest
+    image: rabbitmq:3.6.14-management
     container_name: rabbitmq
     ports:
-      - "5673:5672"  # Change the host port to 5673
-      - "15672:15672"
+      - '5672:5672'  # RabbitMQ default port
+      - '15672:15672'  # RabbitMQ management UI port
     environment:
-      RABBITMQ_DEFAULT_USER: rashid
-      RABBITMQ_DEFAULT_PASS: muhdr123
-    networks:
-      - node-webapp-network
-
-  user-service:
-    image: officialrashid/user-service:latest 
-    container_name: user-service
-    ports:
-      - 3001:3000
-    networks:
-      - node-webapp-network
-
-  product-service:
-    image: officialrashid/product-service:latest 
-    container_name: product-service
-    ports:
-      - 4001:4000
-    networks:
-      - node-webapp-network
+      RABBITMQ_DEFAULT_USER: rashid  # Set your desired RabbitMQ username
+      RABBITMQ_DEFAULT_PASS: muhdr123  # Set your desired RabbitMQ password
 
   order-service:
-    image: officialrashid/order-service:latest 
+    image: officialrashid/order-service
     container_name: order-service
     ports:
-      - 6001:6000
-    networks:
-      - node-webapp-network
+      - '6001:6000'  # Map container port 6000 to host port 6001
+    # Add other environment variables, volumes, etc., as required
 
-# mongodb and other services can be included here if needed
+  product-service:
+    image: officialrashid/product-service
+    container_name: product-service
+    ports:
+      - '4001:4000'  # Map container port 4000 to host port 4001
+    # Add other environment variables, volumes, etc., as required
 
-networks:
-  node-webapp-network:
-    driver: bridge
+  user-service:
+    image: officialrashid/user-service
+    container_name: user-service
+    ports:
+      - '3001:3000'  # Map container port 3000 to host port 3001
+    # Add other environment variables, volumes, etc., as required
+
+# Add other services here if needed
+
