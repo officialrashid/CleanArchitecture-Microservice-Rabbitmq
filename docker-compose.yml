@@ -1,0 +1,43 @@
+version: '3.9'
+services:
+  rabbitmq:
+    image: rabbitmq:latest
+    container_name: rabbitmq
+    ports:
+      - "5673:5672"  # Change the host port to 5673
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: rashid
+      RABBITMQ_DEFAULT_PASS: muhdr123
+    networks:
+      - node-webapp-network
+
+  user-service:
+    image: officialrashid/user-service:latest 
+    container_name: user-service
+    ports:
+      - 3001:3000
+    networks:
+      - node-webapp-network
+
+  product-service:
+    image: officialrashid/product-service:latest 
+    container_name: product-service
+    ports:
+      - 4001:4000
+    networks:
+      - node-webapp-network
+
+  order-service:
+    image: officialrashid/order-service:latest 
+    container_name: order-service
+    ports:
+      - 6001:6000
+    networks:
+      - node-webapp-network
+
+# mongodb and other services can be included here if needed
+
+networks:
+  node-webapp-network:
+    driver: bridge

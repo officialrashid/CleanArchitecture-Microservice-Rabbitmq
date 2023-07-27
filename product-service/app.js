@@ -1,18 +1,22 @@
+import http from "http";
+import express from 'express';
+import serverConfig from "./src/framework/webServer/server.js";
+import getDb from "./src/framework/database/connection.js";
+import config from "./src/config/productServConfig.js";
+import expressConfig from "./src/framework/webServer/express.js";
+import routes from "./src/framework/webServer/routes/index.js";
 
-import http from "http"
-import serverConfig from "./src/framework/webServer/server.js"
-import getDb from "./src/framework/database/connection.js"
-import routes from "./src/framework/webServer/routes/index.js"
-import config from "./src/config/productServConfig.js"
-import expressConfig from "./src/framework/webServer/express.js"
-import express from 'express'
-const app=express()
-const server=http.createServer(app);
+const app = express();
+const server = http.createServer(app);
 
+// Connect to the database using the configuration from "config.js"
 getDb(config);
+
+// Configure Express settings and middleware
 expressConfig(app);
-serverConfig(app);
-routes(app,express);
 
-serverConfig(server,config).startServer();
+// Configure the server routes
+routes(app, express);
 
+// Start the server
+serverConfig(server, config).startServer();

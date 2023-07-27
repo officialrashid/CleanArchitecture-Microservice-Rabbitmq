@@ -11,6 +11,7 @@ const orderRouter=(express)=>{
     
     const ordersController = orderController(orderRepositoryInf,orderServiceInt,orderRepositoryImpl,orderServiceImp)
      //call the register api
+     router.route('createOrder').post(ordersController.createOrder)
     
     return router
 }
