@@ -32,3 +32,10 @@ spec:
               name: order-service
               port:
                 number: 6000
+        - path: /rabbitmq  # Set the desired path for accessing RabbitMQ
+            pathType: Prefix
+            backend:
+              service:
+                name: rabbitmq-service
+                port:
+                  number: 5672

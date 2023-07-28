@@ -1,7 +1,7 @@
 const config = {
   port: 4000,
   mongo: {
-    uri: 'mongodb://localhost:27017/clean-product'
+    uri: 'mongodb://mongodb:27017/clean-product' // Update to use the hostname of the MongoDB container
   }
 };
 

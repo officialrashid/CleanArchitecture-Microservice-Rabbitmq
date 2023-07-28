@@ -1,36 +1,45 @@
-version: '3.9'
+version: "3"
+
+networks:
+  my_network:
+    driver: bridge
 
 services:
   rabbitmq:
-    image: rabbitmq:3.6.14-management
-    container_name: rabbitmq
+    image: rabbitmq:3-management 
     ports:
-      - '5672:5672'  # RabbitMQ default port
-      - '15672:15672'  # RabbitMQ management UI port
-    environment:
-      RABBITMQ_DEFAULT_USER: rashid  # Set your desired RabbitMQ username
-      RABBITMQ_DEFAULT_PASS: muhdr123  # Set your desired RabbitMQ password
-
-  order-service:
-    image: officialrashid/order-service
-    container_name: order-service
-    ports:
-      - '6001:6000'  # Map container port 6000 to host port 6001
-    # Add other environment variables, volumes, etc., as required
-
-  product-service:
-    image: officialrashid/product-service
-    container_name: product-service
-    ports:
-      - '4001:4000'  # Map container port 4000 to host port 4001
-    # Add other environment variables, volumes, etc., as required
+      - "5672:5672"
+    networks:
+      - my_network
 
   user-service:
-    image: officialrashid/user-service
-    container_name: user-service
+    image: user-service:latest
     ports:
-      - '3001:3000'  # Map container port 3000 to host port 3001
-    # Add other environment variables, volumes, etc., as required
+      - "3000:3000"
+    networks:
+      - my_network
 
-# Add other services here if needed
+  product-service:
+    image: product-service:latest
+    ports:
+      - "4001:4000"
+    networks:
+      - my_network
+
+  order-service:
+    image: order-service:latest
+    ports:
+      - "6000:6000"
+    networks:
+      - my_network
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mongodata:/data/db  # You may change the volume path to your preference
+    networks:
+      - my_network
+
 
